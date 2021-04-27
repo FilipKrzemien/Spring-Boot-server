@@ -1,15 +1,16 @@
-package com.example.server.models.dao;
+package com.example.server.models.db;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 @Table(name="goal")
-public class GoalDAO {
+public class Goal {
 
     @Getter
     @Setter
@@ -23,7 +24,7 @@ public class GoalDAO {
     @ManyToOne
     @JsonManagedReference
     @JoinColumn(name="user_id",referencedColumnName = "user_id",nullable = false)
-    private UserDAO userDAO;
+    private User user;
 
     @Getter
     @Setter
@@ -37,8 +38,8 @@ public class GoalDAO {
 
     @Getter
     @Setter
-    @Column(name="name")
-    private String name;
+    @Column(name="percentage")
+    private Float percentage;
 
     @Getter
     @Setter
@@ -48,22 +49,22 @@ public class GoalDAO {
     @Getter
     @Setter
     @Column(name="goal_start")
-    private Date start;
+    private LocalDate start;
 
     @Getter
     @Setter
     @Column(name="goal_end")
-    private Date end;
+    private LocalDate end;
 
     @Getter
     @Setter
     @OneToOne
     @JoinColumn(name="category_id",referencedColumnName = "category_id")
-    private CategoryDAO categoryDAO;
+    private Category category;
 
     @Getter
     @Setter
     @OneToOne
     @JoinColumn(name="sub_category_id",referencedColumnName = "sub_category_id")
-    private SubCategoryDAO subCategoryDAO;
+    private SubCategory subCategory;
 }

@@ -1,6 +1,7 @@
-package com.example.server.models.dao;
+package com.example.server.models.db;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="user_login_details")
-public class UserLoginDetailsDAO {
+public class UserLoginDetails {
     @Getter
     @Setter
     @Id
@@ -23,6 +24,7 @@ public class UserLoginDetailsDAO {
 
     @Getter
     @Setter
+    @JsonIgnore
     @Column(name="password")
     private String password;
 
@@ -31,8 +33,8 @@ public class UserLoginDetailsDAO {
     @OneToOne
     @JsonBackReference
     @JoinColumn(name="user_id",referencedColumnName = "user_id", nullable = false)
-    private UserDAO userDAO;
+    private User user;
 
-    public UserLoginDetailsDAO() {
+    public UserLoginDetails() {
     }
 }

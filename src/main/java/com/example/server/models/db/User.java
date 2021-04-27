@@ -1,6 +1,8 @@
-package com.example.server.models.dao;
+package com.example.server.models.db;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name ="users")
-public class UserDAO {
+public class User {
 
     @Getter
     @Setter
@@ -30,25 +32,28 @@ public class UserDAO {
 
     @Getter
     @Setter
-    @OneToOne(cascade = CascadeType.ALL,mappedBy = "userDAO",fetch = FetchType.LAZY)
-    private UserPersonalDetailsDAO personalDetails;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonManagedReference
+    @OneToOne(cascade = CascadeType.ALL,mappedBy = "user",fetch = FetchType.LAZY)
+    private UserPersonalDetails personalDetails;
 
     @Getter
     @Setter
-    @OneToOne(cascade = CascadeType.ALL,mappedBy = "userDAO",fetch = FetchType.LAZY)
-    private UserLoginDetailsDAO loginDetails;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @OneToOne(cascade = CascadeType.ALL,mappedBy = "user",fetch = FetchType.LAZY)
+    private UserLoginDetails loginDetails;
 
     @Getter
     @Setter
     @JsonBackReference
-    @OneToMany(mappedBy = "userDAO",fetch = FetchType.LAZY)
-    private List<LimitDAO> limitDAOS;
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    private List<Limit> limits;
 
     @Getter
     @Setter
     @JsonBackReference
-    @OneToMany(mappedBy = "userDAO",fetch = FetchType.LAZY)
-    private List<GoalDAO> goalDAOS;
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    private List<Goal> goals;
 
     @Getter
     @Setter
@@ -59,7 +64,13 @@ public class UserDAO {
             inverseJoinColumns = @JoinColumn(name="spending_id")
     )
     @JsonBackReference
-    private List<SpendingDAO> spendingDAOS;
-    public UserDAO() {
+    private List<Spending> spendings;
+
+    public User() {
+    }
+
+    public User(int id, String nickname){
+        this.id = id;
+        this.nickname = nickname;
     }
 }

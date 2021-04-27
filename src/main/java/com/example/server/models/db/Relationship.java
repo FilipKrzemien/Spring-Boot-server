@@ -1,4 +1,4 @@
-package com.example.server.models.dao;
+package com.example.server.models.db;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,26 +7,26 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="relationship")
-public class RelationshipDAO {
+public class Relationship {
 
     @Getter
     @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "relationship_id")
-    private int relationshipID;
+    private int relationshipId;
 
     @Getter
     @Setter
     @ManyToOne
     @JoinColumn(name = "user_one_id",referencedColumnName = "user_id",nullable = false)
-    private UserDAO userDAOOne;
+    private User userOne;
 
     @Getter
     @Setter
     @ManyToOne
     @JoinColumn(name = "user_two_id",referencedColumnName = "user_id",nullable = false)
-    private UserDAO userDAOTwo;
+    private User userTwo;
 
     @Getter
     @Setter

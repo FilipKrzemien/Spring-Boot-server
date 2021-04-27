@@ -1,6 +1,5 @@
-package com.example.server.models.dao;
+package com.example.server.models.db;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="subCategory")
-public class SubCategoryDAO {
+public class SubCategory {
 
     @Getter
     @Setter
@@ -20,15 +19,14 @@ public class SubCategoryDAO {
     @Getter
     @Setter
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name="category_id",referencedColumnName = "category_id", nullable = false)
-    private CategoryDAO categoryDAO;
+    private Category category;
 
     @Getter
     @Setter
     @Column(name="name")
     private String name;
 
-    public SubCategoryDAO() {
+    public SubCategory() {
     }
 }
