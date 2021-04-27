@@ -1,7 +1,7 @@
 package com.example.server.services;
 
-import com.example.server.models.Category;
-import com.example.server.models.dao.CategoryDAO;
+import com.example.server.models.CategoryDTO;
+import com.example.server.models.db.Category;
 import com.example.server.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,21 +16,21 @@ public class CategoryService {
 
     @Autowired
     CategoryRepository categoryRepository;
-    public List<CategoryDAO> getAll() {
+    public List<Category> getAll() {
         return categoryRepository.findAll();
     }
 
-    public ResponseEntity<?> createCategory(Category category) {
-        String name = category.getName();
+    public ResponseEntity<?> createCategory(CategoryDTO categoryDTO) {
+        String name = categoryDTO.getName();
 
-        Optional<CategoryDAO> result = Optional.ofNullable(categoryRepository.findByName(name));
+        Optional<Category> result = Optional.ofNullable(categoryRepository.findByName(name));
 
         if(result.isEmpty()){
-            CategoryDAO insert = new CategoryDAO();
+            Category insert = new Category();
             insert.setName(name);
             categoryRepository.save(insert);
             return new ResponseEntity<>("Category created", HttpStatus.CREATED);
         }
-        else return new ResponseEntity<>("Category already exist", HttpStatus.BAD_REQUEST);
+        else return new ResponseEntity<>("Category already exists", HttpStatus.BAD_REQUEST);
     }
 }
