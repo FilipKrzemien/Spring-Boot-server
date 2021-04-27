@@ -1,10 +1,10 @@
 package com.example.server.repository;
 
-import com.example.server.models.dao.UserDAO;
+import com.example.server.models.db.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UsersRepository extends JpaRepository<UserDAO, Integer> {
+public interface UsersRepository extends JpaRepository<User, Integer> {
 
-    UserDAO findById(int id);
-    UserDAO findByNickname(String nickname);
+    User findById(int id);
+    User findByNickname(String nickname);
 }

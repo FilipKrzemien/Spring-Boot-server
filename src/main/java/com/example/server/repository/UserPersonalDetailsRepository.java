@@ -1,7 +1,11 @@
 package com.example.server.repository;
 
-import com.example.server.models.dao.UserPersonalDetailsDAO;
+import com.example.server.models.db.User;
+import com.example.server.models.db.UserPersonalDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserPersonalDetailsRepository extends JpaRepository<UserPersonalDetailsDAO, Integer> {
+import java.util.Optional;
+
+public interface UserPersonalDetailsRepository extends JpaRepository<UserPersonalDetails, Integer> {
+    UserPersonalDetails findByUser(Optional<User> user);
 }

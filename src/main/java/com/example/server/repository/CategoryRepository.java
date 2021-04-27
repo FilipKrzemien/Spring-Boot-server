@@ -1,10 +1,12 @@
 package com.example.server.repository;
 
-import com.example.server.models.dao.CategoryDAO;
+import com.example.server.models.db.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CategoryRepository extends JpaRepository<CategoryDAO, Integer> {
+public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
-    CategoryDAO findByName(String name);
+    Category findByName(String name);
+
+
 }
 
