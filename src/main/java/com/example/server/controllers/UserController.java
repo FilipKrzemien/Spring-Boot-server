@@ -1,8 +1,9 @@
 package com.example.server.controllers;
 
-import com.example.server.models.PasswordChange;
-import com.example.server.models.RegistrationForm;
-import com.example.server.models.dao.UserDAO;
+import com.example.server.models.LoginFormDTO;
+import com.example.server.models.PasswordChangeDTO;
+import com.example.server.models.RegistrationFormDTO;
+import com.example.server.models.db.User;
 import com.example.server.services.UserService;
 import com.sun.istack.NotNull;
 import io.vavr.control.Try;
@@ -22,30 +23,40 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/all")
-    public List<UserDAO> getAll(){
+    public List<User> getAll() {
         return userService.getAll();
     }
 
     @GetMapping("id/{id}")
-    public UserDAO getByID(@PathVariable int id){
+    public User getByID(@PathVariable int id) {
         return userService.getByID(id);
     }
 
     @GetMapping("/nick/{nick}")
-    public UserDAO getByID(@PathVariable String nick) {return userService.getByNick(nick);}
+    public User getByID(@PathVariable String nick) {
+        return userService.getByNick(nick);
+    }
 
     @PostMapping("/new")
-    public ResponseEntity<?> registration(@RequestBody @NotNull RegistrationForm registrationForm){
-        return Try.of(() -> userService.registerNewUser(registrationForm)).getOrElseGet(t ->{
-            log.error("Exception. {}",t.getCause().getMessage());
+    public ResponseEntity<?> registration(@RequestBody @NotNull RegistrationFormDTO registrationFormDTO) {
+        return Try.of(() -> userService.registerNewUser(registrationFormDTO)).getOrElseGet(t -> {
+            log.error("Exception. {}", t.getCause().getMessage());
             return null;
         });
     }
 
     @PutMapping("/changePassword")
-    public ResponseEntity<?> changePassword(@RequestBody @NotNull PasswordChange passwordChange){
-        return Try.of(() -> userService.changePassword(passwordChange)).getOrElseGet(t ->{
-            log.error("Exception. {}",t.getCause().getMessage());
+    public ResponseEntity<?> changePassword(@RequestBody @NotNull PasswordChangeDTO passwordChangeDTO) {
+        return Try.of(() -> userService.changePassword(passwordChangeDTO)).getOrElseGet(t -> {
+            log.error("Exception. {}", t.getCause().getMessage());
+            return null;
+        });
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody @NotNull LoginFormDTO loginform) {
+        return Try.of(() -> userService.login(loginform)).getOrElseGet(t -> {
+            log.error("Exception. {}", t.getCause().getMessage());
             return null;
         });
     }
